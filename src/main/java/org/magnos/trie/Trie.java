@@ -1003,7 +1003,7 @@ public class Trie<S, T> implements Map<S, T>
 
       private TrieNode<S, T> findNext()
       {
-         if (indices[0] == root.children.capacity())
+         if (root.children == null || indices[0] == root.children.capacity())
          {
             return null;
          }

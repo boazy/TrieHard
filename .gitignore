@@ -1,8 +1,10 @@
 .svn/
 .bin/
 .bin-all/
+.idea/
 bin/
 doc/
+*.iml
 *.o
 *.gch
 *.sublime-workspace

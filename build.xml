@@ -34,28 +34,28 @@
 
 	</target>
 
-    <target name="javadoc" depends="compile">
+    <!--<target name="javadoc" depends="compile">-->
 
-        <javadoc
-			access="public"
-        	classpath="${build.in}"
-        	destdir="${doc}"
-        	nodeprecated="false"
-        	nodeprecatedlist="false"
-        	noindex="false"
-        	nonavbar="false"
-        	notree="false"
-        	source="${java.source}"
-        	sourcepath="${build.src}"
-        	splitindex="true"
-        	use="true" version="true" author="true"
-        	windowtitle="${title}">
+        <!--<javadoc-->
+			<!--access="public"-->
+        	<!--classpath="${build.in}"-->
+        	<!--destdir="${doc}"-->
+        	<!--nodeprecated="false"-->
+        	<!--nodeprecatedlist="false"-->
+        	<!--noindex="false"-->
+        	<!--nonavbar="false"-->
+        	<!--notree="false"-->
+        	<!--source="${java.source}"-->
+        	<!--sourcepath="${build.src}"-->
+        	<!--splitindex="true"-->
+        	<!--use="true" version="true" author="true"-->
+        	<!--windowtitle="${title}">-->
 
-        	 <link href="http://download.oracle.com/javase/6/docs/api/"/>
+        	 <!--<link href="http://download.oracle.com/javase/6/docs/api/"/>-->
 
-        </javadoc>
+        <!--</javadoc>-->
 
-    </target>
+    <!--</target>-->
 
 	<target name="clean">
 

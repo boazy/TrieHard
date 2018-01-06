@@ -16,12 +16,6 @@
 
 package org.magnos.trie;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +23,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.junit.Test;
+
+import javax.swing.tree.TreeNode;
+
+import static org.junit.Assert.*;
 
 
 public class TestTrie
@@ -49,6 +47,75 @@ public class TestTrie
       assertFalse( t.has( "", TrieMatch.PARTIAL ) );
       assertFalse( t.has( "", TrieMatch.PARTIAL ) );
       assertFalse( t.has( "", TrieMatch.STARTS_WITH ) );
+   }
+
+   @Test
+   public void testEmptyNodeSet()
+   {
+      Trie<String, Integer> t = Tries.forStrings();
+
+      t.put("com/foo", 1);
+      t.put("org/bar", 2);
+
+      Set<TrieNode<String, Integer>> nodeSet = t.nodeSet("net");
+      Set<Entry<String, Integer>> entrySet = t.entrySet("net");
+
+      assertEquals(0, nodeSet.size());
+      assertEquals(0, entrySet.size());
+   }
+
+   @Test
+   public void testSingleEntryNodeSet()
+   {
+      Trie<String, Integer> t = Tries.forStrings();
+
+      t.put("com/foo", 15);
+      t.put("org/bar", 2);
+
+      Set<TrieNode<String, Integer>> nodeSet = t.nodeSet("com", TrieMatch.PARTIAL);
+      Set<Entry<String, Integer>> entrySet = t.entrySet("com", TrieMatch.PARTIAL);
+
+      assertEquals(1, nodeSet.size());
+      assertEquals(1, entrySet.size());
+
+      TrieNode<String, Integer> node = nodeSet.iterator().next();
+      Entry<String, Integer> entry = entrySet.iterator().next();
+
+      assertEquals("com/foo", node.getKey());
+      assertEquals(Integer.valueOf(15), node.value);
+
+      assertEquals("com/foo", entry.getKey());
+      assertEquals(Integer.valueOf(15), entry.getValue());
+   }
+
+   @Test
+   @SuppressWarnings("unchecked")
+   public void testMultiEntryNodeSet()
+   {
+      Trie<String, Integer> t = Tries.forStrings();
+
+      t.put("com/bar", 10);
+      t.put("com/foo", 15);
+      t.put("org/bar", 2);
+
+      Set<TrieNode<String, Integer>> nodeSet = t.nodeSet("com", TrieMatch.PARTIAL);
+      Set<Entry<String, Integer>> entrySet = t.entrySet("com", TrieMatch.PARTIAL);
+
+      assertEquals(2, nodeSet.size());
+      assertEquals(2, entrySet.size());
+
+      TrieNode<String, Integer>[] nodeArray = nodeSet.toArray(new TrieNode[2]);
+      Entry<String, Integer>[] entryArray = entrySet.toArray(new Entry[2]);
+
+      assertEquals("com/bar", nodeArray[0].getKey());
+      assertEquals("com/foo", nodeArray[1].getKey());
+      assertEquals(Integer.valueOf(10), nodeArray[0].value);
+      assertEquals(Integer.valueOf(15), nodeArray[1].value);
+
+      assertEquals("com/bar", entryArray[0].getKey());
+      assertEquals("com/foo", entryArray[1].getKey());
+      assertEquals(Integer.valueOf(10), entryArray[0].getValue());
+      assertEquals(Integer.valueOf(15), entryArray[1].getValue());
    }
 
    @Test
